@@ -1,14 +1,14 @@
 ---
-title: "Metal3 Cluster Deployment"
-date: 2020-05-29T13:00:00+02:00
+title: "Metal³ development environment walkthrough part 2: Deploying a new baremetal cluster"
 draft: false
-categories: ["openshift", "kubernetes", "metal3", "operator"]
+categories: ["metal3", "kubernetes", "cluster API", "metal3-dev-env"]
 author: Himanshu Roy
 ---
 
 ## Introduction
 
-This blog post describes how to deploy a bare metal cluster, a virtual one for simplicity, using [Metal³](https://github.com/metal3-io/metal3-dev-env). We will briefly discuss the steps involved in setting up the cluster as well as some of the customizations available. 
+This blog post describes how to deploy a bare metal cluster, a virtual one for simplicity, using [Metal³](https://github.com/metal3-io/metal3-dev-env). We will briefly discuss the steps involved in setting up the cluster as well as some of the customizations available. If you want to know more about the architechture of Metal³, this [blogpost](https://metal3.io/blog/2020/02/27/talk-kubernetes-finland-metal3.html) can be helpful.
+
 This post builds upon the detailed metal3-dev-env walkthrough that describes in detail the steps involved in the environment set up and management cluster configuration. Here we will use that environment to deploy a new Kubernetes cluster using Metal³.
 Before we get started, there are a couple of requirements we are expecting to be fulfilled.
 
@@ -32,7 +32,7 @@ The deployment scripts primarily use ansible and the existing Kubernetes managem
 | ------------------- | ---------------------------- | ------------------------ |
 | CAPI_VERSION        | Version of Metal3 API4       | v1alpha3/v1alpha4        |
 | POD_CIDR            | Pod Network CIDR             | 192.168.0.0/18           |
-| CLUSTER_NAME        |  Name of bare metal cluster  | test1                    |
+| CLUSTER_NAME        | Name of bare metal cluster   | test1                    |
 
 
 ### Steps
@@ -41,13 +41,20 @@ All the scripts for cluster provisioning or deprovisioning are located at - [`${
 The steps involved in the process are :
 
 - Some of the configuration files generated as part of provisioning a cluster, in a centos based environment, are :
-  - clusterctl env file : ${Manifests}/clusterctl_env_centos.rc
-  - manifest file for cluster is generated using clusterctl-tool : ${Manifests}/manifests.yaml
-  - directory for kustomization resource files : ${Manifests}/base
-    > Note : the base directory has templates for the resources that are created while provisioning
-  - [kustomization](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) file : ${Maifests}/kustomization.yaml
+
+| Name           | Description                                       | Path                          |
+| ------------------- | ---------------------------------------------| ----------------------------- |
+| clusterctl env file        | Contains Cluster Environment details  | `${Manifests}/clusterctl_env_centos.rc` |
+| POD_CIDR            | Pod Network CIDR                             |  |
+| CLUSTER_NAME        |  Name of bare metal cluster                  |  |
+
+  - clusterctl env file : `${Manifests}/clusterctl_env_centos.rc`
+  - manifest file for cluster is generated using clusterctl-tool : `${Manifests}/manifests.yaml`
+  - directory for kustomization resource files : `${Manifests}/base`
+    > Note : the `base` directory has templates for the resources that are created while provisioning
+  - [kustomization](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) file : `${Maifests}/kustomization.yaml`
   - [`kustomize-tool`](https://github.com/kubernetes-sigs/kustomize) is used to build manifests in the base directory
-  - cluster, controlplane and machinedeployment manifests are generated in base directory :  ${Manifests}/base
+  - cluster, controlplane and machinedeployment manifests are generated in `base` directory
   - worker manifests are generated and added using kustomize-tool
 > **Note** :  *All the resources created as part of provisioning have their templates under the ‘base’ directory*
 - The script calls an ansible playbook with necessary parameter ( from env vars and defaults )
@@ -62,11 +69,11 @@ The steps involved in the process are :
 
 **Note** : *Here is a depiction of the common steps, mainly involving generating templates and config files.*
 
-![](assets/images/metal3-generate-templates.svg)
+![A diagram depicting the Generate Templates workflow](/assets/images/metal3-generate-templates.svg)
 
 
 ### Provision Cluster
-This script, located at the path - ${metal3-dev-env}/scripts/v1alphaX/provision_clusters.sh, provisions the cluster. This script creates a `Metal3Cluster` resource. To see if you have a successful deployment, just do - 
+This script, located at the path - `${metal3-dev-env}/scripts/v1alphaX/provision_clusters.sh`, provisions the cluster. This script creates a `Metal3Cluster` resource. To see if you have a successful deployment, just do - 
 ```console
 kubectl get metal3cluster ${CLUSTER_NAME} -n metal3
 ```
@@ -74,7 +81,7 @@ This will return the cluster deployed, and you can check the cluster details by 
 
 Here is what a `Cluster` resource looks like :
 ```console
-kubectl describe Cluster ${Cluster_name} -n metal3
+kubectl describe Cluster ${CLUSTER_NAME} -n metal3
 ```
 ```yaml
 Name:         eko
