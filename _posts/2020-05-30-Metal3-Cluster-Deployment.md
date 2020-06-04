@@ -92,7 +92,7 @@ The steps involved in the process are :
 ### Provision Cluster
 This script, located at the path - `${metal3-dev-env}/scripts/v1alphaX/provision_clusters.sh`, provisions the cluster by creating a `Metal3Cluster` resource. 
 
-To see if you have a successful deployment, just do - 
+To see if you have a successful Cluster creation, just do - 
 ```console
 kubectl get metal3cluster ${CLUSTER_NAME} -n metal3
 ```
@@ -103,90 +103,34 @@ Here is what a `Cluster` resource looks like :
 kubectl describe Cluster ${CLUSTER_NAME} -n metal3
 ```
 ```yaml
-Name:         eko
-Namespace:    metal3
-Labels:       <none>
-Annotations:  <none>
-API Version:  cluster.x-k8s.io/v1alpha3
-Kind:         Cluster
-Metadata:
-  Creation Timestamp:  2020-05-22T18:19:54Z
-  Finalizers:
-    cluster.cluster.x-k8s.io
-  Generation:  2
-  Managed Fields:
-    API Version:  cluster.x-k8s.io/v1alpha3
-    Fields Type:  FieldsV1
-    fieldsV1:
-      f:spec:
-        .:
-        f:clusterNetwork:
-          .:
-          f:pods:
-            .:
-            f:cidrBlocks:
-          f:services:
-            .:
-            f:cidrBlocks:
-        f:controlPlaneRef:
-          .:
-          f:apiVersion:
-          f:kind:
-          f:name:
-        f:infrastructureRef:
-          .:
-          f:apiVersion:
-          f:kind:
-          f:name:
-    Manager:      OpenAPI-Generator
-    Operation:    Update
-    Time:         2020-05-22T18:19:54Z
-    API Version:  cluster.x-k8s.io/v1alpha3
-    Fields Type:  FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:finalizers:
-          .:
-          v:"cluster.cluster.x-k8s.io":
-      f:spec:
-        f:controlPlaneEndpoint:
-          f:host:
-          f:port:
-      f:status:
-        .:
-        f:infrastructureReady:
-        f:phase:
-    Manager:         manager
-    Operation:       Update
-    Time:            2020-05-22T18:19:54Z
-  Resource Version:  5795164
-  Self Link:         /apis/cluster.x-k8s.io/v1alpha3/namespaces/metal3/clusters/eko
-  UID:               b1e342ee-7f53-4dca-8959-8665aa74a26a
-Spec:
-  Cluster Network:
-    Pods:
-      Cidr Blocks:
-        192.168.0.0/18
-    Services:
-      Cidr Blocks:
-        10.96.0.0/12
-  Control Plane Endpoint:
-    Host:  192.168.111.249
-    Port:  6443
-  Control Plane Ref:
-    API Version:  controlplane.cluster.x-k8s.io/v1alpha3
-    Kind:         KubeadmControlPlane
-    Name:         eko
-    Namespace:    metal3
-  Infrastructure Ref:
-    API Version:  infrastructure.cluster.x-k8s.io/v1alpha4
-    Kind:         Metal3Cluster
-    Name:         eko
-    Namespace:    metal3
-Status:
-  Infrastructure Ready:  true
-  Phase:                 Provisioned
-Events:                  <none>
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: Cluster
+metadata:
+  [......]
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/18
+    services:
+      cidrBlocks:
+      - 10.96.0.0/12
+  controlPlaneEndpoint:
+    host: 192.168.111.249
+    port: 6443
+  controlPlaneRef:
+    apiVersion: controlplane.cluster.x-k8s.io/v1alpha3
+    kind: KubeadmControlPlane
+    name: eko
+    namespace: metal3
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+    kind: Metal3Cluster
+    name: eko
+    namespace: metal3
+status:
+  infrastructureReady: true
+  phase: Provisioned
 ```
 
 ### Provision Controlplane
@@ -199,198 +143,37 @@ kubectl describe KubeadmControlPlane ${CLUSTER_NAME} -n metal3
 ```
 
 ```yaml
-Name:         eko
-Namespace:    metal3
-Labels:       cluster.x-k8s.io/cluster-name=eko
-Annotations:  <none>
-API Version:  controlplane.cluster.x-k8s.io/v1alpha3
-Kind:         KubeadmControlPlane
-Metadata:
-  Creation Timestamp:  2020-05-22T19:05:48Z
-  Finalizers:
-    kubeadm.controlplane.cluster.x-k8s.io
-  Generation:  1
-  Managed Fields:
-    API Version:  controlplane.cluster.x-k8s.io/v1alpha3
-    Fields Type:  FieldsV1
-    fieldsV1:
-      f:spec:
-        .:
-        f:infrastructureTemplate:
-          .:
-          f:apiVersion:
-          f:kind:
-          f:name:
-        f:kubeadmConfigSpec:
-          .:
-          f:files:
-          f:initConfiguration:
-            .:
-            f:nodeRegistration:
-              .:
-              f:kubeletExtraArgs:
-                .:
-                f:node-labels:
-              f:name:
-          f:joinConfiguration:
-            .:
-            f:controlPlane:
-            f:nodeRegistration:
-              .:
-              f:kubeletExtraArgs:
-                .:
-                f:node-labels:
-              f:name:
-          f:postKubeadmCommands:
-          f:preKubeadmCommands:
-          f:users:
-        f:replicas:
-        f:version:
-    Manager:      OpenAPI-Generator
-    Operation:    Update
-    Time:         2020-05-22T19:05:48Z
-    API Version:  controlplane.cluster.x-k8s.io/v1alpha3
-    Fields Type:  FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:finalizers:
-          .:
-          v:"kubeadm.controlplane.cluster.x-k8s.io":
-        f:labels:
-          .:
-          f:cluster.x-k8s.io/cluster-name:
-        f:ownerReferences:
-          .:
-          k:{"uid":"b1e342ee-7f53-4dca-8959-8665aa74a26a"}:
-            .:
-            f:apiVersion:
-            f:blockOwnerDeletion:
-            f:controller:
-            f:kind:
-            f:name:
-            f:uid:
-      f:status:
-        .:
-        f:replicas:
-        f:selector:
-        f:unavailableReplicas:
-        f:updatedReplicas:
-    Manager:    manager
-    Operation:  Update
-    Time:       2020-05-22T19:06:05Z
-  Owner References:
-    API Version:           cluster.x-k8s.io/v1alpha3
-    Block Owner Deletion:  true
-    Controller:            true
-    Kind:                  Cluster
-    Name:                  eko
-    UID:                   b1e342ee-7f53-4dca-8959-8665aa74a26a
-  Resource Version:        5811363
-  Self Link:               /apis/controlplane.cluster.x-k8s.io/v1alpha3/namespaces/metal3/kubeadmcontrolplanes/eko
-  UID:                     e599039c-a72f-40a2-8c63-9126a1627527
-Spec:
-  Infrastructure Template:
-    API Version:  infrastructure.cluster.x-k8s.io/v1alpha4
-    Kind:         Metal3MachineTemplate
-    Name:         eko-controlplane
-    Namespace:    metal3
-  Kubeadm Config Spec:
-    Files:
-      Content:  ! Configuration File for keepalived
-global_defs {
-    notification_email {
-    sysadmin@example.com
-    support@example.com
-    }
-    notification_email_from lb@example.com
-    smtp_server localhost
-    smtp_connect_timeout 30
-}
-vrrp_instance VI_1 {
-    state MASTER
-    interface eth1
-    virtual_router_id 1
-    priority 101
-    advert_int 1
-    virtual_ipaddress {
-        192.168.111.249
-    }
-}
-
-      Path:     /etc/keepalived/keepalived.conf
-      Content:  BOOTPROTO=dhcp
-DEVICE=eth1
-ONBOOT=yes
-TYPE=Ethernet
-USERCTL=no
-
-      Owner:        root:root
-      Path:         /etc/sysconfig/network-scripts/ifcfg-eth1
-      Permissions:  0644
-      Content:      [kubernetes]
-name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=1
-repo_gpgcheck=0
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-
-      Owner:        root:root
-      Path:         /etc/yum.repos.d/kubernetes.repo
-      Permissions:  0644
-    Init Configuration:
-      Local API Endpoint:
-        Advertise Address:  
-        Bind Port:          0
-      Node Registration:
-        Kubelet Extra Args:
-          Node - Labels:  metal3.io/uuid={{ ds.meta_data.uuid }}
-        Name:             {{ ds.meta_data.name }}
-    Join Configuration:
-      Control Plane:
-        Local API Endpoint:
-          Advertise Address:  
-          Bind Port:          0
-      Discovery:
-      Node Registration:
-        Kubelet Extra Args:
-          Node - Labels:  metal3.io/uuid={{ ds.meta_data.uuid }}
-        Name:             {{ ds.meta_data.name }}
-    Post Kubeadm Commands:
-      mkdir -p /home/metal3/.kube
-      cp /etc/kubernetes/admin.conf /home/metal3/.kube/config
-      chown metal3:metal3 /home/metal3/.kube/config
-    Pre Kubeadm Commands:
-      ifup eth1
-      dnf update -y
-      dnf install -y ebtables socat conntrack-tools
-      dnf install python3 -y
-      dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-      setenforce 0
-      sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
-      dnf install docker-ce docker-ce-cli --disableexcludes=kubernetes --nobest -y
-      dnf install gcc kernel-headers kernel-devel keepalived device-mapper-persistent-data lvm2 -y
-      echo  "Installing kubernetes binaries"
-      curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/{kubeadm,kubelet,kubectl}
-      chmod a+x kubeadm kubelet kubectl
-      mv kubeadm kubelet kubectl /usr/local/bin/
-      mkdir -p /etc/systemd/system/kubelet.service.d
-      curl -sSL "https://raw.githubusercontent.com/kubernetes/release/v0.2.7/cmd/kubepkg/templates/latest/deb/kubelet/lib/systemd/system/kubelet.service" | sed "s:/usr/bin:/usr/local/bin:g" > /etc/systemd/system/kubelet.service
-      curl -sSL "https://raw.githubusercontent.com/kubernetes/release/v0.2.7/cmd/kubepkg/templates/latest/deb/kubeadm/10-kubeadm.conf" | sed "s:/usr/bin:/usr/local/bin:g" > /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-      usermod -aG docker metal3
-      systemctl enable --now docker keepalived kubelet
-    Users:
-      Name:  metal3
-      Ssh Authorized Keys: ${SSH_KEY}
-      Sudo:  ALL=(ALL) NOPASSWD:ALL
-  Replicas:  1
-  Version:   v1.18.0
-Status:
-  Replicas:              1
-  Selector:              cluster.x-k8s.io/cluster-name=eko,cluster.x-k8s.io/control-plane=
-  Unavailable Replicas:  1
-  Updated Replicas:      1
-Events:                  <none>
+apiVersion: controlplane.cluster.x-k8s.io/v1alpha3
+kind: KubeadmControlPlane
+metadata:
+  [....]
+  ownerReferences:
+  - apiVersion: cluster.x-k8s.io/v1alpha3
+    blockOwnerDeletion: true
+    controller: true
+    kind: Cluster
+    name: eko
+    uid: aec0f73b-a068-4992-840d-6330bf943d22
+  resourceVersion: "44555"
+  selfLink: /apis/controlplane.cluster.x-k8s.io/v1alpha3/namespaces/metal3/kubeadmcontrolplanes/eko
+  uid: 99487c75-30f1-4765-b895-0b83b0e5402b
+spec:
+  infrastructureTemplate:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+    kind: Metal3MachineTemplate
+    name: eko-controlplane
+    namespace: metal3
+  kubeadmConfigSpec:
+    files:
+    - content: |
+        [....]
+  replicas: 1
+  version: v1.18.0
+status:
+  replicas: 1
+  selector: cluster.x-k8s.io/cluster-name=eko,cluster.x-k8s.io/control-plane=
+  unavailableReplicas: 1
+  updatedReplicas: 1
 ```
 
 ```console
@@ -433,129 +216,57 @@ This is what a `MachineDeployment` looks like
 kubectl describe MachineDeployment ${CLUSTER_NAME} -n metal3
 ```
 ```yaml
-Name:         eko
-Namespace:    metal3
-Labels:       cluster.x-k8s.io/cluster-name=eko
-              nodepool=nodepool-0
-Annotations:  machinedeployment.clusters.x-k8s.io/revision: 1
-API Version:  cluster.x-k8s.io/v1alpha3
-Kind:         MachineDeployment
-Metadata:
-  Creation Timestamp:  2020-05-27T15:54:28Z
-  Generation:          1
-  Managed Fields:
-    API Version:  cluster.x-k8s.io/v1alpha3
-    Fields Type:  FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .:
-          f:cluster.x-k8s.io/cluster-name:
-          f:nodepool:
-      f:spec:
-        .:
-        f:clusterName:
-        f:replicas:
-        f:selector:
-          .:
-          f:matchLabels:
-            .:
-            f:cluster.x-k8s.io/cluster-name:
-            f:nodepool:
-        f:template:
-          .:
-          f:metadata:
-            .:
-            f:labels:
-              .:
-              f:cluster.x-k8s.io/cluster-name:
-              f:nodepool:
-          f:spec:
-            .:
-            f:bootstrap:
-              .:
-              f:configRef:
-                .:
-                f:apiVersion:
-                f:kind:
-                f:name:
-            f:clusterName:
-            f:infrastructureRef:
-              .:
-              f:apiVersion:
-              f:kind:
-              f:name:
-            f:version:
-    Manager:      OpenAPI-Generator
-    Operation:    Update
-    Time:         2020-05-27T15:54:28Z
-    API Version:  cluster.x-k8s.io/v1alpha3
-    Fields Type:  FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          .:
-          f:machinedeployment.clusters.x-k8s.io/revision:
-        f:ownerReferences:
-      f:status:
-        .:
-        f:observedGeneration:
-        f:phase:
-        f:replicas:
-        f:selector:
-        f:unavailableReplicas:
-        f:updatedReplicas:
-    Manager:    manager
-    Operation:  Update
-    Time:       2020-05-27T15:54:33Z
-  Owner References:
-    API Version:     cluster.x-k8s.io/v1alpha3
-    Kind:            Cluster
-    Name:            eko
-    UID:             ae0f4084-b33e-423c-96f2-ad72e3038e67
-  Resource Version:  76157
-  Self Link:         /apis/cluster.x-k8s.io/v1alpha3/namespaces/metal3/machinedeployments/eko
-  UID:               a6597451-356c-46bb-be41-f93e9a4b6e4d
-Spec:
-  Cluster Name:               eko
-  Min Ready Seconds:          0
-  Progress Deadline Seconds:  600
-  Replicas:                   1
-  Revision History Limit:     1
-  Selector:
-    Match Labels:
-      cluster.x-k8s.io/cluster-name:  eko
-      Nodepool:                       nodepool-0
-  Strategy:
-    Rolling Update:
-      Max Surge:        1
-      Max Unavailable:  0
-    Type:               RollingUpdate
-  Template:
-    Metadata:
-      Labels:
-        cluster.x-k8s.io/cluster-name:  eko
-        Nodepool:                       nodepool-0
-    Spec:
-      Bootstrap:
-        Config Ref:
-          API Version:  bootstrap.cluster.x-k8s.io/v1alpha3
-          Kind:         KubeadmConfigTemplate
-          Name:         eko-workers
-      Cluster Name:     eko
-      Infrastructure Ref:
-        API Version:  infrastructure.cluster.x-k8s.io/v1alpha4
-        Kind:         Metal3MachineTemplate
-        Name:         eko-workers
-      Version:        v1.18.0
-Status:
-  Observed Generation:   1
-  Phase:                 ScalingUp
-  Replicas:              1
-  Selector:              cluster.x-k8s.io/cluster-name=eko,nodepool=nodepool-0
-  Unavailable Replicas:  1
-  Updated Replicas:      1
-Events:                  <none>
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: MachineDeployment
+metadata:
+  [....]
+  ownerReferences:
+  - apiVersion: cluster.x-k8s.io/v1alpha3
+    kind: Cluster
+    name: eko
+    uid: aec0f73b-a068-4992-840d-6330bf943d22
+  resourceVersion: "66257"
+  selfLink: /apis/cluster.x-k8s.io/v1alpha3/namespaces/metal3/machinedeployments/eko
+  uid: f598da43-0afe-44e4-b793-cd5244c13f4e
+spec:
+  clusterName: eko
+  minReadySeconds: 0
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/cluster-name: eko
+      nodepool: nodepool-0
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        cluster.x-k8s.io/cluster-name: eko
+        nodepool: nodepool-0
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
+          kind: KubeadmConfigTemplate
+          name: eko-workers
+      clusterName: eko
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+        kind: Metal3MachineTemplate
+        name: eko-workers
+      version: v1.18.0
+status:
+  observedGeneration: 1
+  phase: ScalingUp
+  replicas: 1
+  selector: cluster.x-k8s.io/cluster-name=eko,nodepool=nodepool-0
+  unavailableReplicas: 1
+  updatedReplicas: 1
 ```
 
 To check the status we can follow steps similar to ControlPlane's case :
