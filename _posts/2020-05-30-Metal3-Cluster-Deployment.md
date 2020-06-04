@@ -10,6 +10,7 @@ author: Himanshu Roy
 This blog post describes how to deploy a bare metal cluster, a virtual one for simplicity, using [Metal³](https://github.com/metal3-io/metal3-dev-env). We will briefly discuss the steps involved in setting up the cluster as well as some of the customizations available. If you want to know more about the architechture of Metal³, this [blogpost]({% post_url 2020-02-27-talk-kubernetes-finland-metal3 %}) can be helpful.
 
 This post builds upon the [**detailed metal3-dev-env walkthrough blogpost**]({% post_url 2020-02-18-metal3-dev-env-install-deep-dive %}) which describes in detail the steps involved in the environment set up and management cluster configuration. Here we will use that environment to deploy a new Kubernetes cluster using Metal³.
+
 Before we get started, there are a couple of requirements we are expecting to be fulfilled.
 
 
