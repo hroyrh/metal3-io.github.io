@@ -339,6 +339,7 @@ ssh metal3@{node-ip}
 > If you want to login to the node
 
 We can add or remove workers to the cluster, we can scale up the MachineDeployment up or down, in this example we are adding 2 more worker nodes
+
 ```console
 kubectl scale --replicas=3 MachineDeployment ${CLUSTER_NAME} -n metal3
 ```
