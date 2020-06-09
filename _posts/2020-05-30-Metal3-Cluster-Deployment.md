@@ -94,8 +94,8 @@ The deployment scripts primarily use ansible and the existing Kubernetes managem
 
 All the scripts for cluster provisioning or deprovisioning are located at - [`${metal3-dev-env}/scripts/v1alphaX/`](https://github.com/metal3-io/metal3-dev-env/tree/master/scripts/v1alphaX). The scripts call a common playbook which handles all the tasks that are available.
 
-> info Note
-> *Here is a depiction of the common steps, mainly involving generating templates and config files.*  
+> info "Note"
+> Here is a depiction of the common steps, mainly involving generating templates and config files. 
 
 <br/>
 
