@@ -32,7 +32,7 @@ In this section we give a brief overview of the important config files and resou
 
 ### Config Files and Resources Types
 
-!["A list of files under manifests directory for CLUSTER_NAME=bmetalcluster"](/assets/2020-05-30-Metal3-Cluster-Deployment/manifest-directory.png)  
+!["A list of files under manifests directory for CLUSTER_NAME=bmetalcluster"](/assets/2020-06-18-Metal3-dev-env-BareMetal-Cluster-Deployment/manifest-directory.png)  
 > info "Note"
 > All these files are generated under the path `https://github.com/metal3-io/metal3-dev-env/tree/master/vm-setup/roles/v1aX_integration_test/files` as part of the provisioning process. When you do a provisioning for the first time, this directory is created and is subsequently used to store the templates and config files generated for deploying the baremetal cluster.
 
@@ -99,7 +99,7 @@ All the scripts for cluster provisioning or deprovisioning are located at - [`${
 
 <br/>
 
-!["A diagram depicting the Generate Templates workflow"](/assets/2020-05-30-Metal3-Cluster-Deployment/metal3-generate-templates.png)
+!["A diagram depicting the Generate Templates workflow"](/assets/2020-06-18-Metal3-dev-env-BareMetal-Cluster-Deployment/metal3-generate-templates.png)
 <br/>
 <br/>
 
@@ -123,7 +123,7 @@ The steps involved in the process are :
 
 
 
-!["An Overview of various resources generated while provisioning and their relationship amongst themselves"](/assets/2020-05-30-Metal3-Cluster-Deployment/metal3-bmetal-arch-overview.png)  
+!["An Overview of various resources generated while provisioning and their relationship amongst themselves"](/assets/2020-06-18-Metal3-dev-env-BareMetal-Cluster-Deployment/metal3-bmetal-arch-overview.png)  
 <br/>
 <br/>
 
