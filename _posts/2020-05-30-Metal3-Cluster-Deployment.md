@@ -7,7 +7,7 @@ author: Himanshu Roy
 
 ## Introduction
 
-This blog post describes how to deploy a bare metal cluster, a virtual one for simplicity, using [Metal³/metal3-dev-env](https://github.com/metal3-io/metal3-dev-env). We will briefly discuss the steps involved in setting up the cluster as well as some of the customizations available. If you want to know more about the architechture of Metal³, this [blogpost]({%post_url 2020-02-27-talk-kubernetes-finland-metal3 %}) can be helpful.
+This blog post describes how to deploy a bare metal cluster, a virtual one for simplicity, using [Metal³|metal3-dev-env](https://github.com/metal3-io/metal3-dev-env). We will briefly discuss the steps involved in setting up the cluster as well as some of the customizations available. If you want to know more about the architechture of Metal³, this [blogpost]({%post_url 2020-02-27-talk-kubernetes-finland-metal3 %}) can be helpful.
 
 This post builds upon the [detailed metal3-dev-env walkthrough blogpost]({%post_url 2020-02-18-metal3-dev-env-install-deep-dive %}) which describes in detail the steps involved in the environment set up and management cluster configuration. Here we will use that environment to deploy a new Kubernetes cluster using Metal³.
 
@@ -131,12 +131,14 @@ The steps involved in the process are :
 ### Provision Cluster
 This script, located at the path - `${metal3-dev-env}/scripts/v1alphaX/provision_clusters.sh`, provisions the cluster by creating a `Metal3Cluster` resource. 
 
-To see if you have a successful Cluster resource creation( the cluster still doesn't have a Controlplane or Workers ), just do - 
+<br/>
+To see if you have a successful Cluster resource creation( the cluster still doesn't have a Controlplane or Workers ), just do : 
 ```console
 kubectl get Metal3Cluster ${CLUSTER_NAME} -n metal3
 ```
-This will return the cluster deployed, and you can check the cluster details by describing the returned resource.
+> This will return the cluster deployed, and you can check the cluster details by describing the returned resource.
 
+<br/>
 Here is what a `Cluster` resource looks like :
 ```console
 kubectl describe Cluster ${CLUSTER_NAME} -n metal3
@@ -225,6 +227,7 @@ status:
 kubectl get Metal3MachineTemplate ${CLUSTER_NAME}-controlplane -n metal3
 ```
 
+<br/>
 To track the progress of provisioning, you can try the following:
 ```console 
 kubectl get BareMetalHosts -n metal3 -w
@@ -241,7 +244,7 @@ kubectl get Machine -n metal3 -w
 ```
 > This shows the status of Machine associated with controlplane and we can watch the status of provisioning under PHASE 
 
-
+<br/>
 Once the provisioning is finished, let's get the host-ip : 
 ```console
 sudo virsh net-dhcp-leases baremetal
@@ -249,7 +252,7 @@ sudo virsh net-dhcp-leases baremetal
 > info "Note"
 > *baremetal is one of the 2 networks that were created at the time of Metal3 deployment, the other being “provisioning” which is used - as you have guessed - for provisioning the bare metal cluster. More details about networking setup in the metal3-dev-env environment are described in the - detailed metal3-dev-env walkthrough blogpost.*
 
-
+<br/>
 You can login to the master node if you want, and can check the deployment status
 ```console
 ssh metal3@{master-node-ip}
@@ -265,6 +268,7 @@ The script is located at `${metal3-dev-env-path}/scripts/v1alphaX/provision_work
 > info "Note"
 > Similar to a Controlplane provisioning, a Worker provisioning also takes some time, and you can watch the process using steps shared a bit later. This will also apply when you scale Up/Down workers at a later point in time.
 
+<br/>
 This is what a `MachineDeployment` looks like
 ```console
 kubectl describe MachineDeployment ${CLUSTER_NAME} -n metal3
@@ -323,6 +327,7 @@ status:
   updatedReplicas: 1
 ```
 
+<br/>
 To check the status we can follow steps similar to ControlPlane's case :
 ```console
 kubectl get bmh -n metal3 -w
