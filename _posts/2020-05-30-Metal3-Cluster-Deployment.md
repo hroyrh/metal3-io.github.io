@@ -228,11 +228,12 @@ kubectl get Metal3MachineTemplate ${CLUSTER_NAME}-controlplane -n metal3
 ```
 
 <br/>
+
 To track the progress of provisioning, you can try the following:
 ```console 
 kubectl get BareMetalHosts -n metal3 -w
 ```
-> The `BareMetalHosts` resource is created when `Metal³|metal3-dev-env` was deployed. It represents a `BareMetalHost`, with all its details and configuration, and is managed by the `BareMetalOperator`.
+> The `BareMetalHosts` resource is created when `Metal³|metal3-dev-env` was deployed. It is a kubernetes resouce that represents a Baremetal Machine, with all its details and configuration, and is managed by the `BareMetalOperator`. You can also use the short representation instead, i.e. `bmh` ( short for `BareMetalHosts`) in the command above.
 
 > You should see all the nodes that were created at the time of metal3 deployment, along with their current status as the provisioning progresses
 > info "Note"
@@ -332,7 +333,7 @@ To check the status we can follow steps similar to ControlPlane's case :
 ```console
 kubectl get bmh -n metal3 -w
 ```
-> We can see the live status of the node being provisioned
+> We can see the live status of the node being provisioned. As mentioned before `bmh` is short reprsentation for `BareMetalHosts`.
 
 ```console
 kubectl get Machine -n metal3 -w
