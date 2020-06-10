@@ -122,7 +122,6 @@ The steps involved in the process are :
 
 
 
-
 !["An Overview of various resources generated while provisioning and their relationship amongst themselves"](/assets/2020-06-18-Metal3-dev-env-BareMetal-Cluster-Deployment/metal3-bmetal-arch-overview.png)  
 <br/>
 <br/>
@@ -132,7 +131,8 @@ The steps involved in the process are :
 This script, located at the path - `${metal3-dev-env}/scripts/v1alphaX/provision_clusters.sh`, provisions the cluster by creating a `Metal3Cluster` resource. 
 
 <br/>
-To see if you have a successful Cluster resource creation( the cluster still doesn't have a Controlplane or Workers ), just do : 
+To see if you have a successful Cluster resource creation( the cluster still doesn't have a Controlplane or Workers ), just do :
+
 ```console
 kubectl get Metal3Cluster ${CLUSTER_NAME} -n metal3
 ```
@@ -232,6 +232,7 @@ kubectl get Metal3MachineTemplate ${CLUSTER_NAME}-controlplane -n metal3
 <br/>
 
 To track the progress of provisioning, you can try the following:
+
 ```console 
 kubectl get BareMetalHosts -n metal3 -w
 ```
@@ -373,7 +374,8 @@ kubectl scale --replicas=3 MachineDeployment ${CLUSTER_NAME} -n metal3
 ### Deprovisioning
 
 All of the previous components have corresponding deprovisioning scripts which use config files, in the previously mentioned manifest directory, and use them to clean up worker, controlplane and cluster.
-For example if you wish to deprovision the cluster, you would do : 
+For example if you wish to deprovision the cluster, you would do :
+
 ```console
 sh ${metal3-dev-env-path}/scripts/v1alphaX/deprovision_cluster.sh
 ```
