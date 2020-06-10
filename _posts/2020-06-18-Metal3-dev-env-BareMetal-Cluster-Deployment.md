@@ -140,6 +140,7 @@ kubectl get Metal3Cluster ${CLUSTER_NAME} -n metal3
 
 <br/>
 Here is what a `Cluster` resource looks like :
+
 ```console
 kubectl describe Cluster ${CLUSTER_NAME} -n metal3
 ```
@@ -248,6 +249,7 @@ kubectl get Machine -n metal3 -w
 
 <br/>
 Once the provisioning is finished, let's get the host-ip : 
+
 ```console
 sudo virsh net-dhcp-leases baremetal
 ```
@@ -256,6 +258,7 @@ sudo virsh net-dhcp-leases baremetal
 
 <br/>
 You can login to the master node if you want, and can check the deployment status
+
 ```console
 ssh metal3@{master-node-ip}
 ```
@@ -272,6 +275,7 @@ The script is located at `${metal3-dev-env-path}/scripts/v1alphaX/provision_work
 
 <br/>
 This is what a `MachineDeployment` looks like
+
 ```console
 kubectl describe MachineDeployment ${CLUSTER_NAME} -n metal3
 ```
@@ -332,6 +336,7 @@ status:
 
 <br/>
 To check the status we can follow steps similar to ControlPlane's case :
+
 ```console
 kubectl get bmh -n metal3 -w
 ```
