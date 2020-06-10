@@ -143,6 +143,7 @@ Here is what a `Cluster` resource looks like :
 ```console
 kubectl describe Cluster ${CLUSTER_NAME} -n metal3
 ```
+
 ```yaml
 apiVersion: cluster.x-k8s.io/v1alpha3
 kind: Cluster
@@ -274,6 +275,7 @@ This is what a `MachineDeployment` looks like
 ```console
 kubectl describe MachineDeployment ${CLUSTER_NAME} -n metal3
 ```
+
 ```yaml
 apiVersion: cluster.x-k8s.io/v1alpha3
 kind: MachineDeployment
